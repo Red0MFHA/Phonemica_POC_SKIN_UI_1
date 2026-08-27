@@ -7,7 +7,7 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: "Jungle Quest",
-  description: "The Phoneme Adventure — a PHONOVA Engine game",
+  description: "The Phoneme Adventure — a Phonemica Engine game",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
