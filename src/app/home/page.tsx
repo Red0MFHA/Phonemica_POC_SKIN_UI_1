@@ -15,9 +15,12 @@ export default function HomePage() {
 
   useEffect(() => {
     const id = getGameState().childId;
-    if (!id) return;
-    engineClient.getChild(id).then(setChild);
-  }, []);
+    if (!id) { router.replace("/welcome"); return; }
+    engineClient.getChild(id).then((c) => {
+      if (c) setChild(c);
+      else router.replace("/welcome");
+    });
+  }, [router]);
 
   async function begin() {
     setBusy(true);
