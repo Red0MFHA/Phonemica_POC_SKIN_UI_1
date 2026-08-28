@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Mic, Loader2, Check, RotateCcw, ArrowRight } from "lucide-react";
 import { theme, difficultyZone, animalForPhoneme } from "@/config/game";
@@ -13,8 +13,9 @@ import type { Exercise } from "@/types/engine";
 
 const EXERCISES_PER_LEVEL = 5;
 
-export default function ExercisePage({ params }: { params: { id: string } }) {
+export default function ExercisePage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
+  const id = React.use(params).id;
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [done, setDone] = useState(0);
   const [recording, setRecording] = useState(false);
@@ -63,7 +64,7 @@ export default function ExercisePage({ params }: { params: { id: string } }) {
       const newDone = done + 1;
       if (newDone >= EXERCISES_PER_LEVEL) {
         // Level finished — Engine decides completion.
-        await engineClient.completeLevel(sessionId, params.id);
+        await engineClient.completeLevel(sessionId, id);
         router.push("/level-complete");
         return;
       }
